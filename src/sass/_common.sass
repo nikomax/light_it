@@ -12,6 +12,57 @@ a
   padding: 0 40px
   margin: 0 auto
 
-input
-  border: 1px solid #aeaeae
+.main
+  padding: 30px 0
 
+input, textarea
+  border: 1px solid #aeaeae
+  border-radius: 5px
+  padding: 10px
+  display: block
+  width: 100%
+  margin-bottom: 20px
+
+.btn
+  transition: 0.2s
+  padding: 10px
+  border-radius: 5px
+  background-color: transparent
+  border: solid 1px #aeaeae
+  display: block
+  width: 120px
+  margin: 0 auto
+  &:hover
+  	box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.3)
+
+.buttons
+  display: flex
+
+.comments-wrapper
+  margin-top: 40px
+
+.leave-comment
+  margin-bottom: 30px
+
+.comment
+  width: 100%
+  padding: 20px
+  border: 1px solid #aeaeae
+  border-radius: 10px
+  margin-bottom: 20px
+
+.item-wrapper
+  display: flex
+  flex-direction: column
+  align-items: center
+  text-align: center
+
+.simple-link
+  transition: 0.2s
+  text-transform: uppercase
+  font-size: 12px
+  font-weight: bold
+  &:hover
+    text-decoration: underline
+  &:not(:last-child)
+    margin-right: 20px

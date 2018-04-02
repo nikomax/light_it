@@ -17,9 +17,9 @@ const addButtons = (itemId, label) => {
         addItem(itemContainer, item.img, item.title, item.text, item.id);
         $.get(`http://smktesting.herokuapp.com/api/reviews/${itemDataId}`, function(data) {
           itemCommentsData = data;
-          $('.leave-comment').html(' <textarea name="" id="" cols="30" rows="10" class="js-comment-text"></textarea>' +
-            '<input type="text" class="js-rate">' +
-            '<button class="js-send-comment">add</button>');
+          $('.leave-comment').html('<div>Leave comment:</div> <textarea name="" id="" cols="30" rows="10" class="js-comment-text"></textarea>' +
+            '<div>Rate:</div><input type="text" class="js-rate">' +
+            '<button class="js-send-comment btn">add</button>');
           $('.js-send-comment').on('click', function() {
             console.log('bla');
             let commentSendData = {
@@ -54,7 +54,9 @@ const addButtons = (itemId, label) => {
 
 const addComments = (item) => {
   commentsContainer.append(`<div class="comment">
-  ${item.text}
+  <div class="comment__user">User: ${item.created_by.username}</divclass>
+  <div class="comment__rate">Rate: ${item.rate}</div>
+  <div class="comment__text">Comment: ${item.text}</div>
 </div>`);
 };
 
@@ -84,7 +86,7 @@ $('.js-popup-link').on('click',function(e) {
   let popupAction = $(this).data('action');
   $('.js-popup').fadeIn();
   if (popupAction === 'login' ) {
-    $('.js-popup-action').html('<button class="js-log-in">Log in</button>');
+    $('.js-popup-action').html('<button class="js-log-in btn">Log in</button>');
     $('.js-log-in').on('click', function(e) {
       e.preventDefault();
       let userSendData = {
@@ -97,7 +99,7 @@ $('.js-popup-link').on('click',function(e) {
       });
     });
   } else {
-    $('.js-popup-action').html('<button class="js-register">Registration</button>');
+    $('.js-popup-action').html('<button class="js-register btn">Registration</button>');
     $('.js-register').on('click', function(e) {
       e.preventDefault();
       let userSendData = {
