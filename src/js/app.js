@@ -20,6 +20,27 @@ const addButtons = (itemId, label) => {
           $('.leave-comment').html(' <textarea name="" id="" cols="30" rows="10" class="js-comment-text"></textarea>' +
             '<input type="text" class="js-rate">' +
             '<button class="js-send-comment">add</button>');
+          $('.js-send-comment').on('click', function() {
+            console.log('bla');
+            let commentSendData = {
+              'rate': $('.js-rate').val(),
+              'text': $('.js-comment-text').val()
+            };
+            if ( userLogInData.success ) {
+              $.post(`http://smktesting.herokuapp.com/api/reviews/${itemDataId}`, commentSendData, function(data) {
+                console.log(data);
+              });
+              $.get(`http://smktesting.herokuapp.com/api/reviews/${itemDataId}`, function(data) {
+                itemCommentsData = data;
+                commentsContainer.html('');
+                for(let i=0; i < itemCommentsData.length; i++) {
+                  addComments(itemCommentsData[i]);
+                }
+              });
+            } else {
+              alert('Log in');
+            }
+          });
           commentsContainer.html('');
           for(let i=0; i < itemCommentsData.length; i++) {
             addComments(itemCommentsData[i]);
@@ -27,6 +48,7 @@ const addButtons = (itemId, label) => {
         });
       }
     });
+
   });
 };
 
@@ -57,28 +79,6 @@ $.get('http://smktesting.herokuapp.com/api/products/', function(data) {
   }
 });
 
-$('.js-send-comment').on('click', function() {
-  console.log('bla');
-  let commentSendData = {
-    'rate': $('.js-rate').val(),
-    'text': $('.js-comment-text').val()
-  };
-  if ( userLogInData.success ) {
-    $.post(`http://smktesting.herokuapp.com/api/reviews/${itemDataId}`, commentSendData, function(data) {
-      console.log(data);
-    });
-    $.get(`http://smktesting.herokuapp.com/api/reviews/${itemDataId}`, function(data) {
-      itemCommentsData = data;
-      commentsContainer.html('');
-      for(let i=0; i < itemCommentsData.length; i++) {
-        addComments(itemCommentsData[i]);
-      }
-    });
-  } else {
-    alert('Log in');
-  }
-});
-
 $('.js-popup-link').on('click',function(e) {
   e.preventDefault();
   let popupAction = $(this).data('action');
@@ -106,6 +106,7 @@ $('.js-popup-link').on('click',function(e) {
       };
       $.post('http://smktesting.herokuapp.com/api/register/', userSendData, function(data) {
         userRegisterData = data;
+        console.log(userRegisterData);
       });
     });
   }
@@ -113,4 +114,6 @@ $('.js-popup-link').on('click',function(e) {
 
 $('.js-popup-close').on('click', function() {
   $(this).parents('.js-popup').fadeOut().find('.js-popup-action').html('');
+  $('.js-user-name').val('');
+  $('.js-password').val('');
 });
